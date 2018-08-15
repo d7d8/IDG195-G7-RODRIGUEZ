@@ -1,0 +1,7 @@
+c:\users\julio\source\repos\Tarea2\Tarea2\bin\Debug\Tarea2.exe.config
+c:\users\julio\source\repos\Tarea2\Tarea2\bin\Debug\Tarea2.exe
+c:\users\julio\source\repos\Tarea2\Tarea2\bin\Debug\Tarea2.pdb
+c:\users\julio\source\repos\Tarea2\Tarea2\obj\Debug\Tarea2.csprojResolveAssemblyReference.cache
+c:\users\julio\source\repos\Tarea2\Tarea2\obj\Debug\Tarea2.csproj.CoreCompileInputs.cache
+c:\users\julio\source\repos\Tarea2\Tarea2\obj\Debug\Tarea2.exe
+c:\users\julio\source\repos\Tarea2\Tarea2\obj\Debug\Tarea2.pdb

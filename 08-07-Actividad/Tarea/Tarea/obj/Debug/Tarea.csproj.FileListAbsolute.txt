@@ -1,0 +1,7 @@
+C:\Users\Julio\source\repos\Tarea\Tarea\bin\Debug\Tarea.exe.config
+C:\Users\Julio\source\repos\Tarea\Tarea\bin\Debug\Tarea.exe
+C:\Users\Julio\source\repos\Tarea\Tarea\bin\Debug\Tarea.pdb
+C:\Users\Julio\source\repos\Tarea\Tarea\obj\Debug\Tarea.csprojResolveAssemblyReference.cache
+C:\Users\Julio\source\repos\Tarea\Tarea\obj\Debug\Tarea.csproj.CoreCompileInputs.cache
+C:\Users\Julio\source\repos\Tarea\Tarea\obj\Debug\Tarea.exe
+C:\Users\Julio\source\repos\Tarea\Tarea\obj\Debug\Tarea.pdb
