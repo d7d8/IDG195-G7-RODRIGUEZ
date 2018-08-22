@@ -1,0 +1,84 @@
+{
+	"Plan de estudios": [
+		{
+		"Semestre":{
+			"Materia":{
+				"Estado de la materia":"aprobada",
+				"Profesor":"Gerardo Del Rincon",
+				"Horas a la semana":"4",
+				"Promedio tentativo de la materia":"93.33",
+				"Nombre de la materia":"Bases de datos"
+			},
+			"Materia":{
+				"Estado de la materia":"aprobada",
+				"Profesor":"Miriam Bautista",
+				"Horas a la semana":"4",
+				"Promedio tentativo de la materia":"91.33",
+				"Nombre de la materia":"Modelado 3D"
+			},
+			"Número de semestre":"4"
+		},
+		"Identificador":"IDGD",
+		"Promedio general":"95.56"
+	},
+	{
+		"Semestre":{
+			"Materia":{
+				"Estado de la materia":"no fue aprobada y se puede cursar",
+				"Profesor":"null",
+				"Horas a la semana":"4",
+				"Promedio tentativo de la materia":"null",
+				"Nombre de la materia":"Lenguajes de programación orientada a objetos"
+			},
+			"Materia":{
+				"Estado de la materia":"cursando",
+				"Profesor":"null",
+				"Horas a la semana":"6",
+				"Promedio tentativo de la materia":"93.4",
+				"Nombre de la materia":"Estatica"
+			},
+			"Número de semestre":"2"
+		},
+		"Semestre":{
+			"Materia":{
+				"Estado de la materia":"cursando",
+				"Profesor":"Adrian Favela",
+				"Horas a la semana":"4",
+				"Promedio tentativo de la materia":"92.9",
+				"Nombre de la materia":"Calculo Integral"
+			},
+			"Materia":{
+				"Estado de la materia":"cursando",
+				"Profesor":"Rigoberto",
+				"Horas a la semana":"6",
+				"Promedio tentativo de la materia":"100",
+				"Nombre de la materia":"Dinamica"
+			},
+			"Número de semestre":"3"
+		},
+		"Identificador":"ICE",
+		"Promedio general":"93.45"
+	},
+	{
+		"Semestre":{
+			"Materia":{
+				"Estado de la materia":"cursando",
+				"Profesor":"Roberto Salas",
+				"Horas a la semana":"6",
+				"Promedio tentativo de la materia":"94.32",
+				"Nombre de la materia":"Termodinamica"
+			},
+			"Materia":{
+				"Estado de la materia":"sujeta a aprobación",
+				"Profesor":"Roberto Salas",
+				"Horas a la semana":"4",
+				"Promedio tentativo de la materia":"92.32",
+				"Nombre de la materia":"Ecuaciones Diferenciales"
+			},
+			"Número de semestre":"4"
+		},
+		"Identificador":"IMEC",
+		"Promedio general":"85.45"
+	}
+]
+}
