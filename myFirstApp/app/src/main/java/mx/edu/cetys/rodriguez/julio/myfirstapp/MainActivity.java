@@ -31,14 +31,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 volleyRequest();
-                Snackbar.make(view, "Hola amiguitos idgdeanos", Snackbar.LENGTH_LONG)
+                String a = APPWIDGET_SERVICE;
+                Snackbar.make(view, a, Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
     }
     private void volleyRequest(){
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url ="https://api.myjson.com/bins/i15p8";
+        String url ="http://138.68.231.116:5000/dashboard/historialacademico/data/";
 
         // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
