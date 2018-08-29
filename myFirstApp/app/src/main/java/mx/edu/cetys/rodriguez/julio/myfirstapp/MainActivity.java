@@ -16,8 +16,14 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    private Gson gson;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,28 +32,33 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.setDateFormat("M/d/yy hh:mm a");
+        gson = gsonBuilder.create();
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 volleyRequest();
-                String a = APPWIDGET_SERVICE;
-                Snackbar.make(view, a, Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "hola amiguitos idgedeanos", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
     }
     private void volleyRequest(){
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url ="http://138.68.231.116:5000/dashboard/historialacademico/data/";
+        String url ="http://138.68.231.116:5000/empresa";
 
         // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        // Display the first 500 characters of the response string.
-                        Toast.makeText(getApplicationContext(), response.substring(0,500), Toast.LENGTH_SHORT).show();
+                        List<Empresa> miEmpresa = Arrays.asList(gson.fromJson(response, Empresa[].class));
+                        Toast.makeText(getApplicationContext(),
+                                miEmpresa.toString(),
+                                Toast.LENGTH_LONG).show();
                     }
                 }, new Response.ErrorListener() {
             @Override
