@@ -48,16 +48,16 @@ public class MainActivity extends AppCompatActivity {
     }
     private void volleyRequest(){
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url ="http://138.68.231.116:5000/empresa";
+        String url ="http://138.68.231.116:5000/perfil/8e7b3b42bfe028a2";
 
         // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        List<Empresa> miEmpresa = Arrays.asList(gson.fromJson(response, Empresa[].class));
+                        Perfil miPerfil = (gson.fromJson(response, Perfil.class));
                         Toast.makeText(getApplicationContext(),
-                                miEmpresa.toString(),
+                                miPerfil.toString(),
                                 Toast.LENGTH_LONG).show();
                     }
                 }, new Response.ErrorListener() {
