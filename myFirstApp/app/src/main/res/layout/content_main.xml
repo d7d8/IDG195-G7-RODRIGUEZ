@@ -21,7 +21,7 @@
         app:layout_constraintVertical_bias="0.107" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/edt_matricula"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
@@ -37,8 +37,10 @@
         app:layout_constraintVertical_bias="0.107" />
 
     <EditText
+        android:id="@+id/edt_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
 
     <Button
         android:id="@+id/button"

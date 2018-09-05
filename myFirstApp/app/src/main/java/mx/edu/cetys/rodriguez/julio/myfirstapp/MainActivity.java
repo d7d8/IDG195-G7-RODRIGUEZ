@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -19,11 +20,14 @@ import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private Gson gson;
+    private EditText edt_matricula;
+    private EditText edt_password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +35,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        edt_password = findViewById(R.id.edt_password);
+        edt_matricula = findViewById(R.id.edt_matricula);
 
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.setDateFormat("M/d/yy hh:mm a");
@@ -48,17 +55,29 @@ public class MainActivity extends AppCompatActivity {
     }
     private void volleyRequest(){
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url ="http://138.68.231.116:5000/perfil/8e7b3b42bfe028a2";
+        String url ="http://138.68.231.116:5000/perfil";
+
+        final String matricula = edt_matricula.getText().toString();
+        final String password = edt_password.getText().toString();
 
         // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Perfil miPerfil = (gson.fromJson(response, Perfil.class));
-                        Toast.makeText(getApplicationContext(),
-                                miPerfil.toString(),
-                                Toast.LENGTH_LONG).show();
+                        List<Perfil> misPerfiles = Arrays.asList(gson.fromJson(response, Perfil[].class));
+                        Perfil miPerfil = findPerfil(misPerfiles,matricula,password);
+                        if (miPerfil != null){
+                            Toast.makeText(getApplicationContext(),
+                                    miPerfil.toString(),
+                                    Toast.LENGTH_LONG).show();
+                        }
+                        else{
+                            Toast.makeText(getApplicationContext(),
+                                    "No existeeen",
+                                    Toast.LENGTH_LONG).show();
+                        }
+
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -69,6 +88,14 @@ public class MainActivity extends AppCompatActivity {
 
         // Add the request to the RequestQueue.
         queue.add(stringRequest);
+    }
+    private Perfil findPerfil(List<Perfil> perfiles, String matricula, String password){
+        for (Perfil perfil: perfiles){
+            if ((perfil.getUsername().equals(matricula)) && perfil.getPassword().equals(password)){
+                return perfil;
+            }
+        }
+        return null;
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

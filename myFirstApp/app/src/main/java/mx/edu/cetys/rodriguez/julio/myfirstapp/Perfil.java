@@ -7,9 +7,9 @@ public class Perfil {
 
     @SerializedName("id")
     private String id;
-    @SerializedName("username")
+    @SerializedName("matricula")
     private String username;
-    @SerializedName("password")
+    @SerializedName("contrasena")
     private String password;
     @SerializedName("Nombre")
     private String nombre;
@@ -27,7 +27,7 @@ public class Perfil {
         final StringBuilder sb = new StringBuilder("Perfil{");
         sb.append("id='").append(id).append('\'');
         sb.append(", username='").append(username).append('\'');
-        sb.append(", password='").append(password).append('\'');
+        sb.append(", constrasena='").append(password).append('\'');
         sb.append(", nombre='").append(nombre).append('\'');
         sb.append(", apellido='").append(apellido).append('\'');
         sb.append(", carrera='").append(carrera).append('\'');
