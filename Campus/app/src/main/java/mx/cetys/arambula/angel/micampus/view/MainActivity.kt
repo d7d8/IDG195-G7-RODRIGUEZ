@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
                     val perfil = utils.buscarPerfilN(perfiles, matricula, password)
 
                     if(perfil != null) {
-                        val intent = Intent(applicationContext, MainMenuActivity::class.java)
+                        val intent = Intent(applicationContext, PerfilListViewActivity::class.java)
                         //intent.putExtra("nombre",perfil.nombre)
                         intent.putExtra("perfildepersona", perfil)
                         startActivity(intent)

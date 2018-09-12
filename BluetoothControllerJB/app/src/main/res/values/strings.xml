@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Bluetooth Ctrl JB</string>
+    <string name="cnt_button">Conectar</string>
+    <string name="forward_button">Adelante</string>
+    <string name="reverse_button">Atrás</string>
+    <string name="right_button">Derecha</string>
+    <string name="left_button">Izquierda</string>
+    <string name="devices_txt">Dispositivos vinculados</string>
+</resources>
