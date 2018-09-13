@@ -22,10 +22,8 @@ import java.util.UUID;
 
 public class Movimiento extends AppCompatActivity {
 
-    private BluetoothAdapter btAdapter = null;
     private BluetoothSocket btSocket = null;
     private ConnectedThread MyConexionBT;
-    private static UUID BTMODULEUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
     private static String address = null;
 
     @Override
@@ -34,12 +32,11 @@ public class Movimiento extends AppCompatActivity {
         setContentView(R.layout.activity_movimiento);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
-        Button rg = (Button) findViewById(R.id.btn_right);
-        Button lf = (Button) findViewById(R.id.btn_left);
-        Button fw = (Button) findViewById(R.id.btn_forward);
-        Button rv = (Button) findViewById(R.id.btn_reverse);
+        Button rg = findViewById(R.id.btn_right);
+        Button lf = findViewById(R.id.btn_left);
+        Button fw = findViewById(R.id.btn_forward);
+        Button rv = findViewById(R.id.btn_reverse);
 
-        btAdapter = BluetoothAdapter.getDefaultAdapter(); // get Bluetooth adapter
 
         rg.setOnTouchListener(new OnTouchListener() {
 
@@ -119,23 +116,34 @@ public class Movimiento extends AppCompatActivity {
     @Override
     public void onResume()
     {
+
+        BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
         super.onResume();
 
         Intent intent = getIntent();
         address = intent.getStringExtra("device_address");
         if(address != null) {
             BluetoothDevice device = btAdapter.getRemoteDevice(address);
-
-            try {
-                btSocket = device.createRfcommSocketToServiceRecord(BTMODULEUUID);
-                btSocket.connect();
-            } catch (IOException e) {
+            byte cont = 0;
+            while(cont < 10) {
                 try {
-                    Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-                    btSocket.close();
-                } catch (IOException e2) {
+                    btSocket = device.createInsecureRfcommSocketToServiceRecord(device.getUuids()[0].getUuid());
+                    btSocket.connect();
+                } catch (IOException e) {
+
                 }
+                if(btSocket.isConnected())
+                    break;
+                cont++;
             }
+            if(cont == 10){
+                Toast.makeText(getBaseContext(), "Unable to connect to device", Toast.LENGTH_LONG).show();
+                try {
+                    btSocket.close();
+                }
+                catch (IOException e){}
+            }
+
             MyConexionBT = new ConnectedThread(btSocket);
             MyConexionBT.start();
         }
@@ -158,7 +166,7 @@ public class Movimiento extends AppCompatActivity {
         private final InputStream mmInStream;
         private final OutputStream mmOutStream;
 
-        public ConnectedThread(BluetoothSocket socket)
+        private ConnectedThread(BluetoothSocket socket)
         {
             InputStream tmpIn = null;
             OutputStream tmpOut = null;

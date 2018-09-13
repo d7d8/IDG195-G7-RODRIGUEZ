@@ -31,7 +31,7 @@ public class Listdevices extends AppCompatActivity {
     public void onResume()
     {
         super.onResume();
-        ;
+
         myPairedDevices = new ArrayAdapter(this, R.layout.dispositivon);
         IdLista = findViewById(R.id.list_devices);
         IdLista.setAdapter(myPairedDevices);
