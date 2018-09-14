@@ -42,11 +42,13 @@ public class Movimiento extends AppCompatActivity {
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if(event.getAction() == MotionEvent.ACTION_DOWN) {
+                if ((btSocket != null) && (btSocket.isConnected())) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     MyConexionBT.write("R");
                 } else if (event.getAction() == MotionEvent.ACTION_UP) {
                     MyConexionBT.write("S");
                 }
+            }
                 return false;
             }
         });
@@ -54,10 +56,12 @@ public class Movimiento extends AppCompatActivity {
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if(event.getAction() == MotionEvent.ACTION_DOWN) {
-                    MyConexionBT.write("L");
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    MyConexionBT.write("S");
+                if((btSocket!=null)&&(btSocket.isConnected())) {
+                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                        MyConexionBT.write("L");
+                    } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                        MyConexionBT.write("S");
+                    }
                 }
                 return false;
             }
@@ -66,10 +70,12 @@ public class Movimiento extends AppCompatActivity {
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if(event.getAction() == MotionEvent.ACTION_DOWN) {
-                    MyConexionBT.write("F");
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    MyConexionBT.write("S");
+                if((btSocket!=null)&&(btSocket.isConnected())) {
+                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                        MyConexionBT.write("F");
+                    } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                        MyConexionBT.write("S");
+                    }
                 }
                 return false;
             }
@@ -78,10 +84,12 @@ public class Movimiento extends AppCompatActivity {
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if(event.getAction() == MotionEvent.ACTION_DOWN) {
-                    MyConexionBT.write("B");
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    MyConexionBT.write("S");
+                if((btSocket!=null)&&(btSocket.isConnected())) {
+                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                        MyConexionBT.write("B");
+                    } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                        MyConexionBT.write("S");
+                    }
                 }
                 return false;
             }
@@ -124,24 +132,16 @@ public class Movimiento extends AppCompatActivity {
         address = intent.getStringExtra("device_address");
         if(address != null) {
             BluetoothDevice device = btAdapter.getRemoteDevice(address);
-            byte cont = 0;
-            while(cont < 10) {
-                try {
-                    btSocket = device.createInsecureRfcommSocketToServiceRecord(device.getUuids()[0].getUuid());
-                    btSocket.connect();
-                } catch (IOException e) {
 
-                }
-                if(btSocket.isConnected())
-                    break;
-                cont++;
-            }
-            if(cont == 10){
+            try {
+                btSocket = device.createInsecureRfcommSocketToServiceRecord(device.getUuids()[0].getUuid());
+                btSocket.connect();
+            } catch (IOException e) {
                 Toast.makeText(getBaseContext(), "Unable to connect to device", Toast.LENGTH_LONG).show();
                 try {
                     btSocket.close();
                 }
-                catch (IOException e){}
+                catch (IOException c){}
             }
 
             MyConexionBT = new ConnectedThread(btSocket);
