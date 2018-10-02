@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Image, TextInput } from 'react-native';
+import { StyleSheet, Text, View, Image, TextInput, Button, Alert } from 'react-native';
 
 class Greeting extends Component {
   render() {
@@ -47,6 +47,12 @@ export default class App extends Component {
         <Greeting saludo='Roxanne' />
         <Greeting saludo='Henry' />
         <Greeting saludo='Maria' />
+        <Button
+          onPress={() => {
+          Alert.alert('Alerta desbloqueada!');
+          }}
+          title="Presioname"
+        />
         <TextInput
           style={{height: 40}}
           placeholder="Traductor pizzero"
