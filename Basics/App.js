@@ -36,7 +36,7 @@ export default class App extends Component {
       uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg'
     };
     return (
-      <View style={{height : 400, alignItems: 'center'}}>
+      <View style={{flex: 1, flexDirection: 'column', justifyContent: 'space-between',}}>
         <Greeting saludo='Roxanne' />
         <Greeting saludo='Henry' />
         <Greeting saludo='Maria' />
