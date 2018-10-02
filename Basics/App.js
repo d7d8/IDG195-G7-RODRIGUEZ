@@ -36,11 +36,11 @@ export default class App extends Component {
       uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg'
     };
     return (
-      <View style={{alignItems: 'center'}}>
+      <View style={{height : 400, alignItems: 'center'}}>
         <Greeting saludo='Roxanne' />
         <Greeting saludo='Henry' />
         <Greeting saludo='Maria' />
-        <Image source={pic} style={{width: 193, height: 140}}/>
+        <Image source={pic} style={{width: 350, height: 200}}/>
         <Text style = {styles.yellow}>Mira las bananas arriba</Text>
         <Blink text = 'Yo parpadeo'/>
       </View>   
