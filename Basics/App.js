@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Image, TextInput, Button, Alert } from 'react-native';
+import { StyleSheet, Text, ScrollView, Image, TextInput, Button, Alert } from 'react-native';
 
 class Greeting extends Component {
   render() {
@@ -43,7 +43,7 @@ export default class App extends Component {
       uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg'
     };
     return (
-      <View style={{flex: 1, flexDirection: 'column', justifyContent: 'space-between',}}>
+      <ScrollView style={{flex: 1, flexDirection: 'column'}}>
         <Greeting saludo='Roxanne' />
         <Greeting saludo='Henry' />
         <Greeting saludo='Maria' />
@@ -64,7 +64,7 @@ export default class App extends Component {
         </Text>
         <Text style = {styles.yellow}>Mira las bananas arriba</Text>
         <Blink text = 'Yo parpadeo'/>
-      </View>   
+      </ScrollView>   
     );
   }
   
@@ -77,5 +77,6 @@ const styles = StyleSheet.create({
   },
   yellow: {
     color: 'yellow',
+    fontSize: 100,
   },
 });
