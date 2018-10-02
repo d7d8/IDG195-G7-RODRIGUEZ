@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet, Text, View, Image, TextInput } from 'react-native';
 
 class Greeting extends Component {
   render() {
@@ -30,7 +30,14 @@ class Blink extends Component {
   }
 }
 
+
 export default class App extends Component {
+  
+  constructor(props) {
+    super(props);
+    this.state = {text: ''};
+  }
+ 
   render() {
     let pic = {
       uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg'
@@ -40,7 +47,15 @@ export default class App extends Component {
         <Greeting saludo='Roxanne' />
         <Greeting saludo='Henry' />
         <Greeting saludo='Maria' />
+        <TextInput
+          style={{height: 40}}
+          placeholder="Traductor pizzero"
+          onChangeText={(text) => this.setState({text})}
+        />
         <Image source={pic} style={{width: 350, height: 200}}/>
+        <Text style={{padding: 10, fontSize: 42}}>
+          {this.state.text.split(' ').map((word) => word && '🍕').join(' ')}
+        </Text>
         <Text style = {styles.yellow}>Mira las bananas arriba</Text>
         <Blink text = 'Yo parpadeo'/>
       </View>   
