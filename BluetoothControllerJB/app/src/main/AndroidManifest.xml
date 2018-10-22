@@ -20,7 +20,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Listdevices"></activity>
+        <activity android:name=".Listdevices" />
+        <activity android:name=".MovimientoA" />
+        <activity android:name=".Settings"></activity>
     </application>
 
 </manifest>

@@ -19,7 +19,7 @@ import java.io.OutputStream
 class Movimiento : AppCompatActivity() {
 
     private var btSocket: BluetoothSocket? = null
-    private var myConexionBT: ConnectedThread? = null
+    private var btConnection: ConnectedThread? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,9 +35,9 @@ class Movimiento : AppCompatActivity() {
         rg.setOnTouchListener { _, event ->
             if (btSocket != null && btSocket!!.isConnected) {
                 if (event.action == MotionEvent.ACTION_DOWN) {
-                    myConexionBT!!.write("R")
+                    btConnection!!.write("R")
                 } else if (event.action == MotionEvent.ACTION_UP) {
-                    myConexionBT!!.write("S")
+                    btConnection!!.write("S")
                 }
             }
             false
@@ -45,9 +45,9 @@ class Movimiento : AppCompatActivity() {
         lf.setOnTouchListener { _, event ->
             if (btSocket != null && btSocket!!.isConnected) {
                 if (event.action == MotionEvent.ACTION_DOWN) {
-                    myConexionBT!!.write("L")
+                    btConnection!!.write("L")
                 } else if (event.action == MotionEvent.ACTION_UP) {
-                    myConexionBT!!.write("S")
+                    btConnection!!.write("S")
                 }
             }
             false
@@ -55,9 +55,9 @@ class Movimiento : AppCompatActivity() {
         fw.setOnTouchListener { _, event ->
             if (btSocket != null && btSocket!!.isConnected) {
                 if (event.action == MotionEvent.ACTION_DOWN) {
-                    myConexionBT!!.write("F")
+                    btConnection!!.write("F")
                 } else if (event.action == MotionEvent.ACTION_UP) {
-                    myConexionBT!!.write("S")
+                    btConnection!!.write("S")
                 }
             }
             false
@@ -65,9 +65,9 @@ class Movimiento : AppCompatActivity() {
         rv.setOnTouchListener { _, event ->
             if (btSocket != null && btSocket!!.isConnected) {
                 if (event.action == MotionEvent.ACTION_DOWN) {
-                    myConexionBT!!.write("B")
+                    btConnection!!.write("B")
                 } else if (event.action == MotionEvent.ACTION_UP) {
-                    myConexionBT!!.write("S")
+                    btConnection!!.write("S")
                 }
             }
             false
@@ -76,19 +76,9 @@ class Movimiento : AppCompatActivity() {
     }
 
     fun settings(v: View) {
-        val bluetooth = BluetoothAdapter.getDefaultAdapter()
-        if (bluetooth == null) {
-            Toast.makeText(applicationContext, "El dispositivo no cuenta con bluetooth, la aplicación se cerrará", Toast.LENGTH_LONG).show()
-            finish()
-        } else {
-            if (bluetooth.isEnabled) {
-                val i = Intent(this, Listdevices::class.java)
-                startActivity(i)
-            } else {
-                val prender = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
-                startActivity(prender)
-            }
-        }
+        val i = Intent(this, Settings::class.java)
+        i.putExtra("device_address",intent.getStringArrayExtra("device_address"))
+        startActivity(i)
     }
 
 
@@ -114,8 +104,8 @@ class Movimiento : AppCompatActivity() {
 
             }
 
-            myConexionBT = ConnectedThread(btSocket!!)
-            myConexionBT!!.start()
+            btConnection = ConnectedThread(btSocket!!)
+            btConnection!!.start()
         }
     }
 
@@ -152,7 +142,7 @@ class Movimiento : AppCompatActivity() {
             try {
                 mmOutStream!!.write(input.toByteArray())
             } catch (e: IOException) {
-                Toast.makeText(baseContext, "La Conexión fallo", Toast.LENGTH_LONG).show()
+                Toast.makeText(baseContext, "The connection failed", Toast.LENGTH_LONG).show()
                 finish()
             }
 

@@ -13,7 +13,7 @@ import android.widget.TextView
 
 class Listdevices : AppCompatActivity() {
 
-    private var idLista: ListView? = null
+    private var idList: ListView? = null
     private var myPairedDevices: ArrayAdapter<String>? = null
 
 
@@ -29,9 +29,9 @@ class Listdevices : AppCompatActivity() {
         super.onResume()
 
         myPairedDevices = ArrayAdapter(this@Listdevices, android.R.layout.simple_list_item_1)
-        idLista = findViewById(R.id.list_devices)
-        idLista?.adapter = myPairedDevices
-        idLista?.onItemClickListener = AdapterView.OnItemClickListener { _, v, _, _ ->
+        idList = findViewById(R.id.list_devices)
+        idList?.adapter = myPairedDevices
+        idList?.onItemClickListener = AdapterView.OnItemClickListener { _, v, _, _ ->
             val c = v as TextView
             val info = c.text.toString()
             val address = info.substring(info.length - 17)
