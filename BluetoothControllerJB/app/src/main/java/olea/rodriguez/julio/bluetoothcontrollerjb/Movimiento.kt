@@ -77,7 +77,7 @@ class Movimiento : AppCompatActivity() {
 
     fun settings(v: View) {
         val i = Intent(this, Settings::class.java)
-        i.putExtra("device_address",intent.getStringArrayExtra("device_address"))
+        i.putExtra("device_address", intent.getStringExtra("device_address"))
         startActivity(i)
     }
 
@@ -111,6 +111,9 @@ class Movimiento : AppCompatActivity() {
 
     public override fun onPause() {
         super.onPause()
+        if (btSocket != null && btSocket!!.isConnected) {
+            btConnection!!.write("S")
+        }
         if (btSocket != null) {
             try {
                 btSocket!!.close()

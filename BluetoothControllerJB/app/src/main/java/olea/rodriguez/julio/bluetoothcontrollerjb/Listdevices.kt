@@ -36,7 +36,7 @@ class Listdevices : AppCompatActivity() {
             val info = c.text.toString()
             val address = info.substring(info.length - 17)
 
-            val i = Intent(this, Movimiento::class.java)
+            val i = Intent(this, Settings::class.java)
             i.putExtra("device_address", address)
             startActivity(i)
         }

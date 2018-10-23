@@ -32,4 +32,16 @@ class Settings : AppCompatActivity() {
         }
     }
 
+    fun movimientoa(v: View){
+        val i = Intent(this, MovimientoA::class.java)
+        i.putExtra("device_address", intent.getStringExtra("device_address"))
+        startActivity(i)
+    }
+
+    fun movimiento(v: View){
+        val i = Intent(this, Movimiento::class.java)
+        i.putExtra("device_address", intent.getStringExtra("device_address"))
+        startActivity(i)
+    }
+
 }
