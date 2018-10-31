@@ -11,6 +11,7 @@ import android.hardware.Sensor
 import android.hardware.SensorManager
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
+import android.os.SystemClock
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
@@ -133,29 +134,44 @@ class MovimientoA : AppCompatActivity(), SensorEventListener{
         val y = e.values[1].toDouble()
         val x = e.values[0].toDouble()
         if (btSocket != null && btSocket!!.isConnected) {
-
             if ((y > 3) && (x < 3) && (x > -3)) {
+                btConnection!!.write("S")
                 btConnection!!.write("R")
-                btnaccrg?.setBackgroundResource(R.drawable.btng)
+                btnaccfw?.visibility = View.INVISIBLE
+                btnacclf?.visibility = View.INVISIBLE
+                btnaccbw?.visibility = View.INVISIBLE
+                btnaccrg?.visibility = View.VISIBLE
             }
             if ((y < -3) && (x < 3) && (x > -3)) {
+                btConnection!!.write("S")
                 btConnection!!.write("L")
-                btnacclf?.setBackgroundResource(R.drawable.btng)
+                btnaccfw?.visibility = View.INVISIBLE
+                btnacclf?.visibility = View.VISIBLE
+                btnaccbw?.visibility = View.INVISIBLE
+                btnaccrg?.visibility = View.INVISIBLE
             }
             if ((x > 3) && (y < 3) && (y > -3)) {
+                btConnection!!.write("S")
                 btConnection!!.write("B")
-                btnaccbw?.setBackgroundResource(R.drawable.btng)
+                btnaccfw?.visibility = View.INVISIBLE
+                btnacclf?.visibility = View.INVISIBLE
+                btnaccbw?.visibility = View.VISIBLE
+                btnaccrg?.visibility = View.INVISIBLE
             }
             if ((x < -3) && (y < 3) && (y > -3)) {
+                btConnection!!.write("S")
                 btConnection!!.write("F")
-                btnaccfw?.setBackgroundResource(R.drawable.btng)
+                btnaccfw?.visibility = View.VISIBLE
+                btnacclf?.visibility = View.INVISIBLE
+                btnaccbw?.visibility = View.INVISIBLE
+                btnaccrg?.visibility = View.INVISIBLE
             }
             if ((y > -3) && (y < 3) && (x < 3) && (x > -3)) {
                 btConnection!!.write("S")
-                btnaccfw?.setBackgroundResource(R.drawable.btnn)
-                btnacclf?.setBackgroundResource(R.drawable.btnn)
-                btnaccbw?.setBackgroundResource(R.drawable.btnn)
-                btnaccrg?.setBackgroundResource(R.drawable.btnn)
+                btnaccfw?.visibility = View.INVISIBLE
+                btnacclf?.visibility = View.INVISIBLE
+                btnaccbw?.visibility = View.INVISIBLE
+                btnaccrg?.visibility = View.INVISIBLE
             }
         }
     }

@@ -6,6 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".Settings">
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/asphaltfog"
+        tools:layout_editor_absoluteX="31dp"
+        tools:layout_editor_absoluteY="66dp" />
+
     <Button
         android:id="@+id/button_setings_bt"
         android:layout_width="85dp"
@@ -118,4 +126,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.596" />
+
 </android.support.constraint.ConstraintLayout>

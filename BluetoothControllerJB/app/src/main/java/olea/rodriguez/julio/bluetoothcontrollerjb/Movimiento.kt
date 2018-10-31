@@ -86,12 +86,10 @@ class Movimiento : AppCompatActivity() {
 
         val btAdapter = BluetoothAdapter.getDefaultAdapter()
         super.onResume()
-
         val intent = intent
         address = intent.getStringExtra("device_address")
         if (address != null) {
             val device = btAdapter.getRemoteDevice(address)
-
             try {
                 btSocket = device.createInsecureRfcommSocketToServiceRecord(device.uuids[0].uuid)
                 btSocket!!.connect()
