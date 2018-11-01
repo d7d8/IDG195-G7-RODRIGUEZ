@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ListView
@@ -50,6 +51,12 @@ class Listdevices : AppCompatActivity() {
                 myPairedDevices!!.add(device.name + "\n" + device.address)
             }
         }
+    }
+
+    fun settings (v: View){
+        val i = Intent(this, Settings::class.java)
+        i.putExtra("device_address",intent.getStringExtra("device_address"))
+        startActivity(i)
     }
 
 }

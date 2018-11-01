@@ -10,6 +10,8 @@ import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import android.content.Intent
+import android.widget.ImageView
+import android.widget.TextView
 
 import java.io.IOException
 import java.io.InputStream
@@ -20,6 +22,8 @@ class Movimiento : AppCompatActivity() {
 
     private var btSocket: BluetoothSocket? = null
     private var btConnection: ConnectedThread? = null
+    private var status: TextView? = null
+    private var statusi: ImageView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,16 +87,25 @@ class Movimiento : AppCompatActivity() {
 
 
     public override fun onResume() {
-
-        val btAdapter = BluetoothAdapter.getDefaultAdapter()
         super.onResume()
+        val btAdapter = BluetoothAdapter.getDefaultAdapter()
         val intent = intent
+        status = findViewById(R.id.txt_stgs_lkd)
+        statusi = findViewById(R.id.iv_stgs_lkd)
+        statusi?.setImageResource(R.drawable.btinp)
+        val s: String = "Not Connected"
+        status?.text = s
         address = intent.getStringExtra("device_address")
         if (address != null) {
             val device = btAdapter.getRemoteDevice(address)
             try {
                 btSocket = device.createInsecureRfcommSocketToServiceRecord(device.uuids[0].uuid)
                 btSocket!!.connect()
+                if (intent.getStringExtra("device_address") != null){
+                    val s: String = "Connected"
+                    status?.text = s
+                    statusi?.setImageResource(R.drawable.ic_bluetooth_searching_black_24dp)
+                }
             } catch (e: IOException) {
                 Toast.makeText(baseContext, "Unable to connect to device", Toast.LENGTH_LONG).show()
                 try {
@@ -101,6 +114,7 @@ class Movimiento : AppCompatActivity() {
                 }
 
             }
+
 
             btConnection = ConnectedThread(btSocket!!)
             btConnection!!.start()

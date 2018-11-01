@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Bluetooth Control</string>
-    <string name="devices_txt">Dispositivos vinculados</string>
+    <string name="devices_txt">Linked Devices</string>
     <string name="acelerometro">invisible</string>
     <string name="button_devices_txt">Dispositivos Bluetooth</string>
+    <string name="title_activity_informacion">Informacion</string>
 </resources>

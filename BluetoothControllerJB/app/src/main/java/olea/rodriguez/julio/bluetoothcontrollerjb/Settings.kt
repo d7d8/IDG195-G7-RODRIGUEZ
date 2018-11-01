@@ -6,14 +6,33 @@ import android.content.pm.ActivityInfo
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 
+
+
 class Settings : AppCompatActivity() {
+
+    private var status: TextView? = null
+    private var statusi: ImageView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+    }
+
+    public override fun onResume() {
+        super.onResume()
+        status = findViewById(R.id.txt_stgs_lkd)
+        statusi = findViewById(R.id.iv_stgs_lkd)
+        statusi?.setImageResource(R.drawable.btinp)
+        if (intent.getStringExtra("device_address") != null){
+            val s: String = "Linked to " + intent.getStringExtra("device_address")
+            status?.text = s
+            statusi?.setImageResource(R.drawable.ic_bluetooth_searching_black_24dp)
+        }
     }
 
     fun bluetooth(v: View) {
@@ -24,6 +43,7 @@ class Settings : AppCompatActivity() {
         } else {
             if (bluetooth.isEnabled) {
                 val i = Intent(this, Listdevices::class.java)
+                i.putExtra("device_address",intent.getStringExtra("device_address"))
                 startActivity(i)
             } else {
                 val prender = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
@@ -44,4 +64,10 @@ class Settings : AppCompatActivity() {
         startActivity(i)
     }
 
+    /*fun informacion(v: View){
+        val i = Intent(this, Informacion::class.java)
+        i.putExtra("device_address", intent.getStringExtra("device_address"))
+        startActivity(i)
+    }
+*/
 }

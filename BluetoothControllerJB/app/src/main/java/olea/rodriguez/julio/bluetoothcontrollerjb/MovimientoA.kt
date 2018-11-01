@@ -14,6 +14,7 @@ import android.hardware.SensorEventListener
 import android.os.SystemClock
 import android.view.View
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import java.io.IOException
@@ -33,6 +34,8 @@ class MovimientoA : AppCompatActivity(), SensorEventListener{
     private var btnaccbw: Button? = null
     private var btnaccrg: Button? = null
     private var btnacclf: Button? = null
+    private var status: TextView? = null
+    private var statusi: ImageView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,8 +59,13 @@ class MovimientoA : AppCompatActivity(), SensorEventListener{
 
         val btAdapter = BluetoothAdapter.getDefaultAdapter()
         super.onResume()
-
+        status = findViewById(R.id.txt_stgs_lkd)
+        statusi = findViewById(R.id.iv_stgs_lkd)
+        statusi?.setImageResource(R.drawable.btinp)
+        val s: String = "Not Connected"
+        status?.text = s
         val intent = intent
+        Toast.makeText(baseContext, "To use acelerometer control, face screen UP to stop car", Toast.LENGTH_LONG).show()
         address = intent.getStringExtra("device_address")
         if (address != null) {
             val device = btAdapter.getRemoteDevice(address)
@@ -65,6 +73,9 @@ class MovimientoA : AppCompatActivity(), SensorEventListener{
             try {
                 btSocket = device.createInsecureRfcommSocketToServiceRecord(device.uuids[0].uuid)
                 btSocket!!.connect()
+                val s: String = "Connected"
+                status?.text = s
+                statusi?.setImageResource(R.drawable.ic_bluetooth_searching_black_24dp)
             } catch (e: IOException) {
                 Toast.makeText(baseContext, "Unable to connect to device", Toast.LENGTH_LONG).show()
                 try {
