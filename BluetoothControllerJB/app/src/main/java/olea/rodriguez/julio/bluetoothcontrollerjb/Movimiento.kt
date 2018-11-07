@@ -40,8 +40,14 @@ class Movimiento : AppCompatActivity() {
             if (btSocket != null && btSocket!!.isConnected) {
                 if (event.action == MotionEvent.ACTION_DOWN) {
                     btConnection!!.write("R")
+                    lf.setEnabled(false)
+                    fw.setEnabled(false)
+                    rv.setEnabled(false)
                 } else if (event.action == MotionEvent.ACTION_UP) {
                     btConnection!!.write("S")
+                    lf.setEnabled(true)
+                    fw.setEnabled(true)
+                    rv.setEnabled(true)
                 }
             }
             false
@@ -50,8 +56,14 @@ class Movimiento : AppCompatActivity() {
             if (btSocket != null && btSocket!!.isConnected) {
                 if (event.action == MotionEvent.ACTION_DOWN) {
                     btConnection!!.write("L")
+                    rg.setEnabled(false)
+                    fw.setEnabled(false)
+                    rv.setEnabled(false)
                 } else if (event.action == MotionEvent.ACTION_UP) {
                     btConnection!!.write("S")
+                    rg.setEnabled(true)
+                    fw.setEnabled(true)
+                    rv.setEnabled(true)
                 }
             }
             false
@@ -60,8 +72,14 @@ class Movimiento : AppCompatActivity() {
             if (btSocket != null && btSocket!!.isConnected) {
                 if (event.action == MotionEvent.ACTION_DOWN) {
                     btConnection!!.write("F")
+                    lf.setEnabled(false)
+                    rg.setEnabled(false)
+                    rv.setEnabled(false)
                 } else if (event.action == MotionEvent.ACTION_UP) {
                     btConnection!!.write("S")
+                    lf.setEnabled(true)
+                    rg.setEnabled(true)
+                    rv.setEnabled(true)
                 }
             }
             false
@@ -70,8 +88,14 @@ class Movimiento : AppCompatActivity() {
             if (btSocket != null && btSocket!!.isConnected) {
                 if (event.action == MotionEvent.ACTION_DOWN) {
                     btConnection!!.write("B")
+                    lf.setEnabled(false)
+                    rg.setEnabled(false)
+                    fw.setEnabled(false)
                 } else if (event.action == MotionEvent.ACTION_UP) {
                     btConnection!!.write("S")
+                    lf.setEnabled(true)
+                    rg.setEnabled(true)
+                    fw.setEnabled(true)
                 }
             }
             false
