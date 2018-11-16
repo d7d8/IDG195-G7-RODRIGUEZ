@@ -9,14 +9,12 @@ import android.view.MotionEvent
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
-import android.content.Intent
 import android.widget.ImageView
 import android.widget.TextView
-
 import java.io.IOException
 import java.io.InputStream
 import java.io.OutputStream
-
+import android.widget.Switch
 
 class Movimiento : AppCompatActivity() {
 
@@ -34,8 +32,63 @@ class Movimiento : AppCompatActivity() {
         val lf = findViewById<Button>(R.id.btn_left)
         val fw = findViewById<Button>(R.id.btn_forward)
         val rv = findViewById<Button>(R.id.btn_reverse)
+        val s = findViewById<Switch>(R.id.switchm)
+
+        s.setOnCheckedChangeListener { _, event ->
+            if (s.isChecked) {
+                val btAdapter = BluetoothAdapter.getDefaultAdapter()
+                val intent = intent
+                status = findViewById(R.id.txt_stgs_lkd)
+                statusi = findViewById(R.id.iv_stgs_lkd)
+                statusi?.setImageResource(R.drawable.btinp)
+                var s: String = "Not Connected"
+                status?.text = s
+                address = intent.getStringExtra("device_address")
+                if (address != null) {
+                    val device = btAdapter.getRemoteDevice(address)
+                    try {
+                        btSocket = device.createInsecureRfcommSocketToServiceRecord(device.uuids[0].uuid)
+                        btSocket!!.connect()
+                        if (intent.getStringExtra("device_address") != null) {
+                            s = "Connected"
+                            status?.text = s
+                            statusi?.setImageResource(R.drawable.ic_bluetooth_searching_black_24dp)
+                        }
+                    } catch (e: IOException) {
+                        Toast.makeText(baseContext, "Unable to connect to device", Toast.LENGTH_LONG).show()
+                        try {
+                            btSocket!!.close()
+                        } catch (c: IOException) {
+                        }
+
+                    }
 
 
+                    btConnection = ConnectedThread(btSocket!!)
+                    btConnection!!.start()
+                }
+                else {
+                    s = "Not linked"
+                    status?.text = s
+                }
+            } else {
+                if (btSocket != null && btSocket!!.isConnected) {
+                    btConnection!!.write("S")
+                }
+                if (btSocket != null) {
+                    try {
+                        btSocket!!.close()
+                        status = findViewById(R.id.txt_stgs_lkd)
+                        statusi = findViewById(R.id.iv_stgs_lkd)
+                        statusi?.setImageResource(R.drawable.btinp)
+                        val s = "Not Connected"
+                        status?.text = s
+                    } catch (e2: IOException) {
+                    }
+
+                }
+            }
+        }
         rg.setOnTouchListener { _, event ->
             if (btSocket != null && btSocket!!.isConnected) {
                 if (event.action == MotionEvent.ACTION_DOWN) {
@@ -104,45 +157,15 @@ class Movimiento : AppCompatActivity() {
     }
 
     fun settings(v: View) {
-        val i = Intent(this, Settings::class.java)
+        /*val i = Intent(this, Settings::class.java)
         i.putExtra("device_address", intent.getStringExtra("device_address"))
-        startActivity(i)
+        startActivity(i)*/
+        this.finish()
     }
 
-
     public override fun onResume() {
+
         super.onResume()
-        val btAdapter = BluetoothAdapter.getDefaultAdapter()
-        val intent = intent
-        status = findViewById(R.id.txt_stgs_lkd)
-        statusi = findViewById(R.id.iv_stgs_lkd)
-        statusi?.setImageResource(R.drawable.btinp)
-        val s: String = "Not Connected"
-        status?.text = s
-        address = intent.getStringExtra("device_address")
-        if (address != null) {
-            val device = btAdapter.getRemoteDevice(address)
-            try {
-                btSocket = device.createInsecureRfcommSocketToServiceRecord(device.uuids[0].uuid)
-                btSocket!!.connect()
-                if (intent.getStringExtra("device_address") != null){
-                    val s: String = "Connected"
-                    status?.text = s
-                    statusi?.setImageResource(R.drawable.ic_bluetooth_searching_black_24dp)
-                }
-            } catch (e: IOException) {
-                Toast.makeText(baseContext, "Unable to connect to device", Toast.LENGTH_LONG).show()
-                try {
-                    btSocket!!.close()
-                } catch (c: IOException) {
-                }
-
-            }
-
-
-            btConnection = ConnectedThread(btSocket!!)
-            btConnection!!.start()
-        }
     }
 
     public override fun onPause() {

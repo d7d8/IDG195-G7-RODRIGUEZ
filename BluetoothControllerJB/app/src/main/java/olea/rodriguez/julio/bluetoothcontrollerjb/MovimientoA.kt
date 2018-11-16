@@ -11,12 +11,8 @@ import android.hardware.Sensor
 import android.hardware.SensorManager
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
-import android.os.SystemClock
 import android.view.View
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import java.io.IOException
 import java.io.InputStream
 import java.io.OutputStream
@@ -53,41 +49,68 @@ class MovimientoA : AppCompatActivity(), SensorEventListener{
         btnaccrg = findViewById(R.id.btn_acc_right)
         btnacclf = findViewById(R.id.btn_acc_left)
         btnaccbw = findViewById(R.id.btn_acc_reverse)
+        val s = findViewById<Switch>(R.id.switchm)
+
+        s.setOnCheckedChangeListener { _, event ->
+            if (s.isChecked) {
+                val btAdapter = BluetoothAdapter.getDefaultAdapter()
+                val intent = intent
+                status = findViewById(R.id.txt_stgs_lkd)
+                statusi = findViewById(R.id.iv_stgs_lkd)
+                statusi?.setImageResource(R.drawable.btinp)
+                var s: String = "Not Connected"
+                status?.text = s
+                address = intent.getStringExtra("device_address")
+                if (address != null) {
+                    val device = btAdapter.getRemoteDevice(address)
+                    try {
+                        btSocket = device.createInsecureRfcommSocketToServiceRecord(device.uuids[0].uuid)
+                        btSocket!!.connect()
+                        if (intent.getStringExtra("device_address") != null) {
+                            s = "Connected"
+                            status?.text = s
+                            statusi?.setImageResource(R.drawable.ic_bluetooth_searching_black_24dp)
+                        }
+                    } catch (e: IOException) {
+                        Toast.makeText(baseContext, "Unable to connect to device", Toast.LENGTH_LONG).show()
+                        try {
+                            btSocket!!.close()
+                        } catch (c: IOException) {
+                        }
+
+                    }
+
+
+                    btConnection = ConnectedThread(btSocket!!)
+                    btConnection!!.start()
+                }
+                else {
+                    s = "Not linked"
+                    status?.text = s
+                }
+            } else {
+                if (btSocket != null && btSocket!!.isConnected) {
+                    btConnection!!.write("S")
+                }
+                if (btSocket != null) {
+                    try {
+                        btSocket!!.close()
+                        status = findViewById(R.id.txt_stgs_lkd)
+                        statusi = findViewById(R.id.iv_stgs_lkd)
+                        statusi?.setImageResource(R.drawable.btinp)
+                        val s = "Not Connected"
+                        status?.text = s
+                    } catch (e2: IOException) {
+                    }
+
+                }
+            }
+        }
     }
 
     public override fun onResume() {
-
-        val btAdapter = BluetoothAdapter.getDefaultAdapter()
         super.onResume()
-        status = findViewById(R.id.txt_stgs_lkd)
-        statusi = findViewById(R.id.iv_stgs_lkd)
-        statusi?.setImageResource(R.drawable.btinp)
-        val s: String = "Not Connected"
-        status?.text = s
-        val intent = intent
-        Toast.makeText(baseContext, "To use acelerometer control, face screen UP to stop car", Toast.LENGTH_LONG).show()
-        address = intent.getStringExtra("device_address")
-        if (address != null) {
-            val device = btAdapter.getRemoteDevice(address)
-
-            try {
-                btSocket = device.createInsecureRfcommSocketToServiceRecord(device.uuids[0].uuid)
-                btSocket!!.connect()
-                val s: String = "Connected"
-                status?.text = s
-                statusi?.setImageResource(R.drawable.ic_bluetooth_searching_black_24dp)
-            } catch (e: IOException) {
-                Toast.makeText(baseContext, "Unable to connect to device", Toast.LENGTH_LONG).show()
-                try {
-                    btSocket!!.close()
-                } catch (c: IOException) {
-                }
-
-            }
-
-            btConnection = ConnectedThread(btSocket!!)
-            btConnection!!.start()
-        }
+        Toast.makeText(baseContext, "Face screen UP to the stop car", Toast.LENGTH_LONG).show()
     }
 
     public override fun onPause() {
