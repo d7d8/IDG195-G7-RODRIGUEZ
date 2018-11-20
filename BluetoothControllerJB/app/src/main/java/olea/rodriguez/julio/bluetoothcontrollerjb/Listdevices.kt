@@ -6,10 +6,7 @@ import android.content.pm.ActivityInfo
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.ListView
-import android.widget.TextView
+import android.widget.*
 
 
 class Listdevices : AppCompatActivity() {
@@ -28,7 +25,17 @@ class Listdevices : AppCompatActivity() {
 
     public override fun onResume() {
         super.onResume()
-
+        val bluetooth = BluetoothAdapter.getDefaultAdapter()
+        if (bluetooth == null) {
+            Toast.makeText(applicationContext, "The device has no bluetooth", Toast.LENGTH_LONG).show()
+            finish()
+        } else {
+            if (bluetooth.isEnabled) {
+            } else {
+                val prender = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
+                startActivity(prender)
+            }
+        }
         myPairedDevices = ArrayAdapter(this@Listdevices, android.R.layout.simple_list_item_1)
         idList = findViewById(R.id.list_devices)
         idList?.adapter = myPairedDevices

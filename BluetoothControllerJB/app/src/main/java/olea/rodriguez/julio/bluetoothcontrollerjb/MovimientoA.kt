@@ -16,6 +16,7 @@ import android.widget.*
 import java.io.IOException
 import java.io.InputStream
 import java.io.OutputStream
+import java.util.*
 
 class MovimientoA : AppCompatActivity(), SensorEventListener{
 
@@ -51,24 +52,25 @@ class MovimientoA : AppCompatActivity(), SensorEventListener{
         btnaccbw = findViewById(R.id.btn_acc_reverse)
         val s = findViewById<Switch>(R.id.switchm)
 
-        s.setOnCheckedChangeListener { _, event ->
+        s.setOnCheckedChangeListener { _, _ ->
+            s.isEnabled = false
             if (s.isChecked) {
                 val btAdapter = BluetoothAdapter.getDefaultAdapter()
                 val intent = intent
                 status = findViewById(R.id.txt_stgs_lkd)
                 statusi = findViewById(R.id.iv_stgs_lkd)
                 statusi?.setImageResource(R.drawable.btinp)
-                var s: String = "Not Connected"
-                status?.text = s
+                var st = "Not Connected"
+                status?.text = st
                 address = intent.getStringExtra("device_address")
                 if (address != null) {
                     val device = btAdapter.getRemoteDevice(address)
                     try {
-                        btSocket = device.createInsecureRfcommSocketToServiceRecord(device.uuids[0].uuid)
+                        btSocket = device.createRfcommSocketToServiceRecord(device.uuids[0].uuid)
                         btSocket!!.connect()
                         if (intent.getStringExtra("device_address") != null) {
-                            s = "Connected"
-                            status?.text = s
+                            st = "Connected"
+                            status?.text = st
                             statusi?.setImageResource(R.drawable.ic_bluetooth_searching_black_24dp)
                         }
                     } catch (e: IOException) {
@@ -80,13 +82,12 @@ class MovimientoA : AppCompatActivity(), SensorEventListener{
 
                     }
 
-
                     btConnection = ConnectedThread(btSocket!!)
                     btConnection!!.start()
                 }
                 else {
-                    s = "Not linked"
-                    status?.text = s
+                    st = "Not linked"
+                    status?.text = st
                 }
             } else {
                 if (btSocket != null && btSocket!!.isConnected) {
@@ -98,13 +99,19 @@ class MovimientoA : AppCompatActivity(), SensorEventListener{
                         status = findViewById(R.id.txt_stgs_lkd)
                         statusi = findViewById(R.id.iv_stgs_lkd)
                         statusi?.setImageResource(R.drawable.btinp)
-                        val s = "Not Connected"
-                        status?.text = s
+                        val st = "Not Connected"
+                        status?.text = st
                     } catch (e2: IOException) {
                     }
 
                 }
             }
+            val buttonTimer = Timer()
+            buttonTimer.schedule(object : TimerTask() {
+                override fun run() {
+                    runOnUiThread { s.setEnabled(true) }
+                }
+            }, 2000)
         }
     }
 
@@ -211,6 +218,7 @@ class MovimientoA : AppCompatActivity(), SensorEventListener{
     }
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
     }
+
 
     fun settings (v: View){
         val i = Intent(this, Settings::class.java)
