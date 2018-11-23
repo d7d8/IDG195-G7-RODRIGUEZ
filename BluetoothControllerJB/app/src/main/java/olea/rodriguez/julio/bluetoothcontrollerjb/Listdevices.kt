@@ -18,10 +18,8 @@ class Listdevices : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_listdevices)
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
 
     }
-
 
     public override fun onResume() {
         super.onResume()
@@ -34,8 +32,10 @@ class Listdevices : AppCompatActivity() {
             } else {
                 val prender = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
                 startActivity(prender)
+
             }
         }
+
         myPairedDevices = ArrayAdapter(this@Listdevices, android.R.layout.simple_list_item_1)
         idList = findViewById(R.id.list_devices)
         idList?.adapter = myPairedDevices

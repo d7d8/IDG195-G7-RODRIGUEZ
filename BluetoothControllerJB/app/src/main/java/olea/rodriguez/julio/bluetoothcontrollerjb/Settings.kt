@@ -20,7 +20,6 @@ class Settings : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
     }
 
     public override fun onResume() {
@@ -33,6 +32,11 @@ class Settings : AppCompatActivity() {
             status?.text = s
             statusi?.setImageResource(R.drawable.ic_bluetooth_searching_black_24dp)
         }
+    }
+
+    fun info(v: View){
+        val i = Intent(this, Informacion::class.java)
+        startActivity(i)
     }
 
     fun bluetooth(v: View) {

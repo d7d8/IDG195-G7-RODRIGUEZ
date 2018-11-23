@@ -3,19 +3,21 @@ package olea.rodriguez.julio.bluetoothcontrollerjb
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothSocket
 import android.content.pm.ActivityInfo
+import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
-import android.widget.Button
-import android.widget.Toast
-import android.widget.ImageView
-import android.widget.TextView
 import java.io.IOException
 import java.io.InputStream
 import java.io.OutputStream
-import android.widget.Switch
 import java.util.*
+import android.media.MediaPlayer
+import android.provider.MediaStore
+import android.widget.*
+import olea.rodriguez.julio.bluetoothcontrollerjb.R.id.videoView
+
+
 
 
 class Movimiento : AppCompatActivity() {
@@ -28,14 +30,36 @@ class Movimiento : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movimiento)
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
 
         val rg = findViewById<Button>(R.id.btn_right)
         val lf = findViewById<Button>(R.id.btn_left)
         val fw = findViewById<Button>(R.id.btn_forward)
         val rv = findViewById<Button>(R.id.btn_reverse)
         val s = findViewById<Switch>(R.id.switchm)
+        val vid = findViewById<Switch>(R.id.switchvideo)
+        //http://www.androidbegin.com/tutorial/AndroidCommercial.3gp
+        //http://192.168.0.11:8080/videofeed
+        //rtsp://10.12.18.52:8080/h264_pcm.sdp
+        var url = "rtsp://10.12.18.125:5554/h264_pcm.sdp"
+        val vv = findViewById<VideoView>(R.id.videoView)
+        val uri = Uri.parse(url)
+        vid.setOnCheckedChangeListener { _, _ ->
+            if (vid.isEnabled){
+                try {
+                    vv.setVideoURI(uri)
+                    vv.requestFocus()
+                    vv.showContextMenu()
+                    vv.start()
+                }
+                catch(e:Exception){
+                    Toast.makeText(baseContext, e.message, Toast.LENGTH_LONG).show()
+                }
+            }
+            else{
+                vv.stopPlayback()
+            }
 
+        }
         s.setOnCheckedChangeListener { _, _ ->
             s.isEnabled = false
             if (s.isChecked) {

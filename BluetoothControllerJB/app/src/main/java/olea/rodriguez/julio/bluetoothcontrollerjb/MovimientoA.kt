@@ -37,7 +37,6 @@ class MovimientoA : AppCompatActivity(), SensorEventListener{
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movimientoa)
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
         sensorM = getSystemService(Context.SENSOR_SERVICE) as SensorManager
         accSensor = sensorM?.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
 
