@@ -34,10 +34,6 @@ class Settings : AppCompatActivity() {
         }
     }
 
-    fun info(v: View){
-        val i = Intent(this, Informacion::class.java)
-        startActivity(i)
-    }
 
     fun bluetooth(v: View) {
         val bluetooth = BluetoothAdapter.getDefaultAdapter()

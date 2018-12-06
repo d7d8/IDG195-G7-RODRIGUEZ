@@ -2,8 +2,7 @@ package olea.rodriguez.julio.bluetoothcontrollerjb
 
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothSocket
-import android.content.pm.ActivityInfo
-import android.net.Uri
+
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MotionEvent
@@ -12,10 +11,8 @@ import java.io.IOException
 import java.io.InputStream
 import java.io.OutputStream
 import java.util.*
-import android.media.MediaPlayer
-import android.provider.MediaStore
+import android.webkit.WebView
 import android.widget.*
-import olea.rodriguez.julio.bluetoothcontrollerjb.R.id.videoView
 
 
 
@@ -37,27 +34,28 @@ class Movimiento : AppCompatActivity() {
         val rv = findViewById<Button>(R.id.btn_reverse)
         val s = findViewById<Switch>(R.id.switchm)
         val vid = findViewById<Switch>(R.id.switchvideo)
-        //http://www.androidbegin.com/tutorial/AndroidCommercial.3gp
-        //http://192.168.0.11:8080/videofeed
-        //rtsp://10.12.18.52:8080/h264_pcm.sdp
-        var url = "rtsp://10.12.18.125:5554/h264_pcm.sdp"
-        val vv = findViewById<VideoView>(R.id.videoView)
-        val uri = Uri.parse(url)
+        val input = findViewById<EditText>(R.id.url_input)
+        //http://192.168.0.13:8080/video/mjpeg
+        //http://10.12.18.52:8080/video/mjpeg
+        val vv = findViewById<WebView>(R.id.webView)
+        vv.settings.loadWithOverviewMode = true
+        vv.settings.useWideViewPort = true
         vid.setOnCheckedChangeListener { _, _ ->
-            if (vid.isEnabled){
-                try {
-                    vv.setVideoURI(uri)
-                    vv.requestFocus()
-                    vv.showContextMenu()
-                    vv.start()
+                if (vid.isChecked) {
+                    try {
+                        vv.visibility = View.VISIBLE
+                        vv.loadUrl(input.text.toString())
+                        input.isEnabled = false
+                        
+                    } catch (e: Exception) {
+                        Toast.makeText(baseContext, e.message, Toast.LENGTH_LONG).show()
+                    }
+                } else if (!vid.isChecked) {
+                    vv.stopLoading()
+                    vv.loadUrl("about:blank")
+                    vv.visibility = View.INVISIBLE
+                    input.isEnabled = true
                 }
-                catch(e:Exception){
-                    Toast.makeText(baseContext, e.message, Toast.LENGTH_LONG).show()
-                }
-            }
-            else{
-                vv.stopPlayback()
-            }
 
         }
         s.setOnCheckedChangeListener { _, _ ->
@@ -209,6 +207,11 @@ class Movimiento : AppCompatActivity() {
         if (btSocket != null) {
             try {
                 btSocket!!.close()
+                status = findViewById(R.id.txt_stgs_lkd)
+                statusi = findViewById(R.id.iv_stgs_lkd)
+                statusi?.setImageResource(R.drawable.btinp)
+                val st = "Not Connected"
+                status?.text = st
             } catch (e2: IOException) {
             }
 
