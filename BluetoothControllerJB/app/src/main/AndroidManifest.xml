@@ -29,11 +29,6 @@
             android:screenOrientation="landscape"/>
         <activity android:name=".Movimiento"
             android:screenOrientation="landscape"/>
-        <activity
-            android:name=".Informacion"
-            android:label="@string/title_activity_informacion"
-            android:screenOrientation="landscape"
-            android:theme="@style/AppTheme" />
     </application>
 
 </manifest>

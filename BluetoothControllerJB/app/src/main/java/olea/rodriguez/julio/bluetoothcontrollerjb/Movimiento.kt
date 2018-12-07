@@ -46,7 +46,7 @@ class Movimiento : AppCompatActivity() {
                         vv.visibility = View.VISIBLE
                         vv.loadUrl(input.text.toString())
                         input.isEnabled = false
-                        
+
                     } catch (e: Exception) {
                         Toast.makeText(baseContext, e.message, Toast.LENGTH_LONG).show()
                     }
@@ -188,9 +188,6 @@ class Movimiento : AppCompatActivity() {
     }
 
     fun settings(v: View) {
-        /*val i = Intent(this, Settings::class.java)
-        i.putExtra("device_address", intent.getStringExtra("device_address"))
-        startActivity(i)*/
         this.finish()
     }
 

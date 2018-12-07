@@ -2,7 +2,6 @@ package olea.rodriguez.julio.bluetoothcontrollerjb
 
 import android.bluetooth.BluetoothAdapter
 import android.content.Intent
-import android.content.pm.ActivityInfo
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -64,10 +63,4 @@ class Settings : AppCompatActivity() {
         startActivity(i)
     }
 
-    /*fun informacion(v: View){
-        val i = Intent(this, Informacion::class.java)
-        i.putExtra("device_address", intent.getStringExtra("device_address"))
-        startActivity(i)
-    }
-*/
 }

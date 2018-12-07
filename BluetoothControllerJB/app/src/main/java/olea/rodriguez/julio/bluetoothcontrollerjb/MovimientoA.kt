@@ -4,7 +4,6 @@ import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothSocket
 import android.content.Context
 import android.content.Intent
-import android.content.pm.ActivityInfo
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.hardware.Sensor
@@ -108,7 +107,7 @@ class MovimientoA : AppCompatActivity(), SensorEventListener{
             val buttonTimer = Timer()
             buttonTimer.schedule(object : TimerTask() {
                 override fun run() {
-                    runOnUiThread { s.setEnabled(true) }
+                    runOnUiThread { s.isEnabled = true }
                 }
             }, 2000)
         }
